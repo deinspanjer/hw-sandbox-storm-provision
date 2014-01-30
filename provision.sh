@@ -2,7 +2,7 @@
 # based on https://github.com/purple52/librarian-puppet-vagrant
 
 # Install rubygems but keep ruby at the existing version.
-yum install -y --exclude=ruby-*1.8.7.352-13.el6.x86_64 rubygems
+yum install -y rubygems ruby-devel
 
 # Directory in which librarian-puppet should manage its modules directory
 PUPPET_DIR=/etc/puppet/
