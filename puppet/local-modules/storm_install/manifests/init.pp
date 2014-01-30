@@ -1,0 +1,2 @@
+class storm_install {
+}
