@@ -18,7 +18,6 @@ The Sandbox VM should be running and configured with internet access.
 1. Run these commands:
     $ git clone git@github.com:deinspanjer/hw-sandbox-storm-provision.git
 	$ cd hw-sandbox-storm-provision
-    $ chmod u+x provision.sh
 	$ ./provision.sh
     
 ## To try out the Storm Starter sample topologies (jobs):
