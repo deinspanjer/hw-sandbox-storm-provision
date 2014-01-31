@@ -68,8 +68,8 @@ class storm_install {
   }
   ->
   replace { 'logback_config':
-    file => '/usr/share/storm-0.9.0.1/logback/cluster.xml',
-    pattern => '${storm\.home}',
+    file        => '/usr/share/storm-0.9.0.1/logback/cluster.xml',
+    pattern     => '\${storm\.home}',
     replacement => '/var/log/storm'
   }
 }
