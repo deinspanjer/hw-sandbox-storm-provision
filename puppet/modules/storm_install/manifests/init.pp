@@ -25,7 +25,7 @@ class storm_install {
   }
   ->
   exec { 'untar_storm':
-    command => 'tar xzf /tmp/storm-0.9.0.1.tar.gz',
+    command => 'tar --owner=storm --group=storm -xzf /tmp/storm-0.9.0.1.tar.gz',
     cwd     => '/usr/share',
     creates => '/usr/share/storm-0.9.0.1',
     path    => ['/bin', '/usr/bin', '/usr/sbin'],
@@ -49,14 +49,27 @@ class storm_install {
     group  => 'storm',
   }
   ->
-  file { '/etc/storm/storm.yaml':
+  file { '/etc/storm/dist':
     ensure => 'symlink',
-    target => '/usr/share/storm/conf/storm.yaml',
+    target => '/usr/share/storm/conf',
+  }
+  ->
+  file { '/etc/storm/storm.yaml':
+    ensure => 'file',
+    source => 'puppet:///modules/storm_install/storm.yaml',
+    owner  => 'storm',
+    group  => 'storm',
   }
   ->
   file { '/var/log/storm':
     ensure => 'directory',
     owner  => 'storm',
     group  => 'storm',
+  }
+  ->
+  replace { 'logback_config':
+    file => '/usr/share/storm-0.9.0.1/logback/cluster.xml',
+    pattern => '${storm\.home}',
+    replacement => '/var/log/storm'
   }
 }

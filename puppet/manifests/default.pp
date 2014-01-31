@@ -3,14 +3,14 @@
 # A replace in file hack
 # Found: http://trac.cae.tntech.edu/infrastructure/browser/puppet/modules/common/manifests/defines/replace.pp?rev=169
 define replace($file, $pattern, $replacement) {
-$pattern_no_slashes = regsubst($pattern, '/', '\\/', 'G', 'U')
-$replacement_no_slashes = regsubst($replacement, '/', '\\/', 'G', 'U')
-exec { "replace_${pattern}_${file}":
-	command => "/usr/bin/perl -pi -e 's/${pattern_no_slashes}/${replacement_no_slashes}/' '${file}'",
-	onlyif  => "/usr/bin/perl -ne 'BEGIN { \$ret = 1; } \$ret = 0 if /${pattern_no_slashes}/ && ! /\\Q${replacement_no_slashes}\\E/; END { exit \$ret; }' '${file}'",
-	alias   => "exec_$name",
-	require => Package["perl"],
-}
+  $pattern_no_slashes = regsubst($pattern, '/', '\\/', 'G', 'U')
+  $replacement_no_slashes = regsubst($replacement, '/', '\\/', 'G', 'U')
+  exec { "replace_${pattern}_${file}":
+    command => "/usr/bin/perl -pi -e 's/${pattern_no_slashes}/${replacement_no_slashes}/' '${file}'",
+    onlyif  => "/usr/bin/perl -ne 'BEGIN { \$ret = 1; } \$ret = 0 if /${pattern_no_slashes}/ && ! /\\Q${replacement_no_slashes}\\E/; END { exit \$ret; }' '${file}'",
+    alias   => "exec_$name",
+    require => Package["perl"],
+  }
 }
 
 class { "java":
@@ -41,29 +41,20 @@ file { "java_home":
 }
 
 # Update all the hardcoded references to JAVA_HOME in various config/env files
-$java_home_fix_line_match_set_defaults = {
-  line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-  match  => '^JAVA_HOME=.*/jdk1\.6\.0.*',
+$java_home_fix_line_match_defaults = {
+  pattern     => 'JAVA_HOME=/usr/jdk64/jdk1\.6\.0_31',
+  replacement => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
 }
-$java_home_fix_files_to_update_set = {
-  'hcat-env.sh' => { path => '/etc/hcatalog/conf.dist/hcat-env.sh' },
-  'pig-env.sh'  => { path => '/etc/pig/conf.dist/pig-env.sh' },
-  
+$java_home_fix_files_to_update = {
+  'oozie-env.sh'     => { file => '/etc/oozie/conf.dist/oozie-env.sh' },
+  'zookeeper-env.sh' => { file => '/etc/zookeeper/conf.dist/zookeeper-env.sh' },
+  'yarn-env.sh'      => { file => '/etc/hadoop/conf.empty/yarn-env.sh' },
+  'hadoop-env.sh'    => { file => '/etc/hadoop/conf.empty/hadoop-env.sh' },
+  'hbase-env.sh'     => { file => '/etc/hbase/conf.dist/hbase-env.sh' },
+  'hcat-env.sh'      => { file => '/etc/hcatalog/conf.dist/hcat-env.sh' },
+  'pig-env.sh'       => { file => '/etc/pig/conf.dist/pig-env.sh' },
 }
-create_resources('file_line', $java_home_fix_files_to_update_set, $java_home_fix_line_match_set_defaults)
-
-$java_home_fix_line_match_export_defaults = {
-  line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-  match  => '^export JAVA_HOME=.*/jdk1\.6\.0.*',
-}
-$java_home_fix_files_to_update_export = {
-  'oozie-env.sh'     => { path => '/etc/oozie/conf.dist/oozie-env.sh' },
-  'zookeeper-env.sh' => { path => '/etc/zookeeper/conf.dist/zookeeper-env.sh' },
-  'yarn-env.sh'      => { path => '/etc/hadoop/conf.empty/yarn-env.sh' },
-  'hadoop-env.sh'    => { path => '/etc/hadoop/conf.empty/hadoop-env.sh' },
-  'hbase-env.sh'     => { path => '/etc/hbase/conf.dist/hbase-env.sh' },
-}
-create_resources('file_line', $java_home_fix_files_to_update_export, $java_home_fix_line_match_export_defaults)
+create_resources('replace', $java_home_fix_files_to_update, $java_home_fix_line_match_defaults)
 
 include "storm_install"
 #include "kettle_storm_install"
