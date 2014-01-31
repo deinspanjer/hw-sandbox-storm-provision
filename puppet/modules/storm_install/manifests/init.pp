@@ -1,11 +1,11 @@
 class storm_install {
   package { 'supervisor': }
-
+  ->
   group { 'storm':
     gid    => 1010,
     ensure => 'present',
   }
-
+  ->
   user { 'storm':
     uid        => 1010,
     gid        => 'storm',
@@ -15,7 +15,7 @@ class storm_install {
     shell      => '/bin/bash',
     ensure     => 'present',
   }
-
+  ->
   exec { 'download_storm':
     command   => 'wget http://public-repo-1.hortonworks.com/HDP-LABS/Projects/Storm/0.9.0.1/storm-0.9.0.1.tar.gz',
     cwd       => '/tmp',
@@ -72,8 +72,7 @@ class storm_install {
     pattern     => '\${storm\.home}/logs',
     replacement => '/var/log/storm'
   }
-
-
+  ->
   file { '/etc/supervisord.conf.dist':
     ensure  => 'file',
     replace => false,
@@ -92,5 +91,11 @@ class storm_install {
     target => '/etc/supervisord.conf',
     source => 'puppet:///modules/storm_install/supervisord.conf',
   }
-  
+  ->
+  service { 'supervisord':
+    ensure     => 'running',
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
+  }
 }
