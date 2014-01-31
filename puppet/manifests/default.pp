@@ -43,7 +43,7 @@ file { "java_home":
 # Update all the hardcoded references to JAVA_HOME in various config/env files
 $java_home_fix_line_match_set_defaults = {
   line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-  match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
+  match  => '^JAVA_HOME=.*/jdk1\.6\.0.*',
 }
 $java_home_fix_files_to_update_set = {
   'hcat-env.sh' => { path => '/etc/hcatalog/conf.dist/hcat-env.sh' },
@@ -54,7 +54,7 @@ create_resources('file_line', $java_home_fix_files_to_update_set, $java_home_fix
 
 $java_home_fix_line_match_export_defaults = {
   line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-  match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
+  match  => '^export JAVA_HOME=.*/jdk1\.6\.0.*',
 }
 $java_home_fix_files_to_update_export = {
   'oozie-env.sh'     => { path => '/etc/oozie/conf.dist/oozie-env.sh' },
@@ -65,5 +65,5 @@ $java_home_fix_files_to_update_export = {
 }
 create_resources('file_line', $java_home_fix_files_to_update_export, $java_home_fix_line_match_export_defaults)
 
-#include "storm-install"
+include "storm-install"
 #include "kettle-storm-install"
