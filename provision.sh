@@ -13,4 +13,4 @@ fi
 
 PUPPET_MODULE_PATH=$(puppet config print modulepath):$(pwd)/puppet/modules
 
-puppet apply --modulepath="$PUPPET_MODULE_PATH" puppet/manifests/default.pp
+puppet apply --modulepath="$PUPPET_MODULE_PATH" puppet/manifests/default.pp $@
