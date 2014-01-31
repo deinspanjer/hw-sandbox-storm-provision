@@ -41,34 +41,29 @@ file { "java_home":
 }
 
 # Update all the hardcoded references to JAVA_HOME in various config/env files
-$files_to_update_export = [ '/etc/oozie/conf.dist/oozie-env.sh',
-                            '/etc/zookeeper/conf.dist/zookeeper-env.sh',
-                            '/etc/hadoop/conf.dist/yarn-env.sh',
-                            '/etc/hadoop/conf.dist/hadoop-env.sh',
-                            '/etc/hbase/conf.dist/hbase-env.sh',
-                          ]
-define export_fix {
-  file_line { "$name":
-    path   => "$name",
-    line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-    match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
-    ensure => "present",
-  }
+$java_home_fix_line_match_set_defaults = {
+  line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
+  match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
 }
-export_fix { "$files_to_update_export": }
+$java_home_fix_files_to_update_set = {
+  'hcat-env.sh' => { path => '/etc/hcatalog/conf.dist/hcat-env.sh' },
+  'pig-env.sh'  => { path => '/etc/pig/conf.dist/pig-env.sh' },
+  
+}
+create_resources('file_line', $java_home_fix_files_to_update_set, $java_home_fix_line_match_set_defaults)
 
-$files_to_update_set = [ '/etc/hcatalog/conf.dist/hcat-env.sh',
-                         '/etc/pig/conf.dist/pig-env.sh',
-                       ]
-define set_fix {
-  file_line { "$name":
-    path   => "$name",
-    line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
-    match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
-    ensure => "present",
-  }
+$java_home_fix_line_match_export_defaults = {
+  line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
+  match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
 }
-set_fix { "$files_to_update_set": }
+$java_home_fix_files_to_update_export = {
+  'oozie-env.sh'     => { path => '/etc/oozie/conf.dist/oozie-env.sh' },
+  'zookeeper-env.sh' => { path => '/etc/zookeeper/conf.dist/zookeeper-env.sh' },
+  'yarn-env.sh'      => { path => '/etc/hadoop/conf.empty/yarn-env.sh' },
+  'hadoop-env.sh'    => { path => '/etc/hadoop/conf.empty/hadoop-env.sh' },
+  'hbase-env.sh'     => { path => '/etc/hbase/conf.dist/hbase-env.sh' },
+}
+create_resources('file_line', $java_home_fix_files_to_update_export, $java_home_fix_line_match_export_defaults)
 
 #include "storm-install"
 #include "kettle-storm-install"
