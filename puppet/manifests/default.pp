@@ -49,6 +49,7 @@ $files_to_update_export = [ '/etc/oozie/conf.dist/oozie-env.sh',
                           ]
 define export_fix {
   file_line { "$name":
+    path   => "$name",
     line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
     match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
     ensure => "present",
@@ -61,6 +62,7 @@ $files_to_update_set = [ '/etc/hcatalog/conf.dist/hcat-env.sh',
                        ]
 define set_fix {
   file_line { "$name":
+    path   => "$name",
     line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
     match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
     ensure => "present",
