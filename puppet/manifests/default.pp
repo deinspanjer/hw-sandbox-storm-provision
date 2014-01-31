@@ -31,14 +31,39 @@ file_line { "etc_bashrc_path":
 }
 
 # Set JAVA_HOME in a more appropriate place
+# Can't use ${java::java_home} cause it doesn't work in the java module v1.0.1 from forge
 file { "java_home":
   path    => "/etc/profile.d/java-path.sh",
-  content => "export JAVA_HOME=${java::java_home}\n",
+  content => "export JAVA_HOME=/etc/alternatives/java_sdk_1.7.0\n",
   owner   => root,
   group   => root,
   require => Class["java"],
 }
 
+# Update all the hardcoded references to JAVA_HOME in various config/env files
+$files_to_update_export = [ '/etc/oozie/conf.dist/oozie-env.sh',
+                            '/etc/zookeeper/conf.dist/zookeeper-env.sh',
+                            '/etc/hadoop/conf.dist/yarn-env.sh',
+                            '/etc/hadoop/conf.dist/hadoop-env.sh',
+                            '/etc/hbase/conf.dist/hbase-env.sh',
+                          ]
+each($files_to_update_export) |$name| {
+  file_line { "$name":
+    line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
+    match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
+    ensure => "present",
+  }
+}
+$files_to_update_set = [ '/etc/hcatalog/conf.dist/hcat-env.sh',
+                         '/etc/pig/conf.dist/pig-env.sh',
+                       ]
+each($files_to_update_set) |$name| {
+  file_line { "$name":
+    line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
+    match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
+    ensure => "present",
+  }
+}
 
 #include "storm-install"
 #include "kettle-storm-install"
