@@ -65,5 +65,5 @@ $java_home_fix_files_to_update_export = {
 }
 create_resources('file_line', $java_home_fix_files_to_update_export, $java_home_fix_line_match_export_defaults)
 
-include "storm-install"
-#include "kettle-storm-install"
+include "storm_install"
+#include "kettle_storm_install"
