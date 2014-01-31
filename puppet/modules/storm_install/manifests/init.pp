@@ -25,7 +25,7 @@ class storm_install {
   }
   ->
   exec { 'untar_storm':
-    command => 'tar xzf storm-0.9.0.1.tar.gz',
+    command => 'tar xzf /tmp/storm-0.9.0.1.tar.gz',
     cwd     => '/usr/share',
     creates => '/usr/share/storm-0.9.0.1',
     path    => ['/bin', '/usr/bin', '/usr/sbin'],
