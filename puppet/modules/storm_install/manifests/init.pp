@@ -75,10 +75,10 @@ class storm_install {
 
 
   file { '/etc/supervisord.conf.dist':
-    ensure   => 'file',
-    replace  => false,
-    source   => '/etc/supervisord.conf',
-    requires => Package['supervisor'],
+    ensure  => 'file',
+    replace => false,
+    source  => '/etc/supervisord.conf',
+    require => Package['supervisor'],
   }
   ->
   concat { '/etc/supervisord.conf':
