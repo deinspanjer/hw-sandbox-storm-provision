@@ -30,5 +30,15 @@ file_line { "etc_bashrc_path":
   ensure => "absent",
 }
 
+# Set JAVA_HOME in a more appropriate place
+file { "java_home":
+  path    => "/etc/profile.d/java-path.sh",
+  content => "export JAVA_HOME=${java::java_home}\n",
+  owner   => root,
+  group   => root,
+  require => Class["java"],
+}
+
+
 #include "storm-install"
 #include "kettle-storm-install"
