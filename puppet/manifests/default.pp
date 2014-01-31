@@ -47,23 +47,26 @@ $files_to_update_export = [ '/etc/oozie/conf.dist/oozie-env.sh',
                             '/etc/hadoop/conf.dist/hadoop-env.sh',
                             '/etc/hbase/conf.dist/hbase-env.sh',
                           ]
-each($files_to_update_export) |$name| {
+define export_fix {
   file_line { "$name":
     line   => 'export JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
     match  => 'export JAVA_HOME=.*/jdk1\.6\.0.*',
     ensure => "present",
   }
 }
+export_fix { "$files_to_update_export": }
+
 $files_to_update_set = [ '/etc/hcatalog/conf.dist/hcat-env.sh',
                          '/etc/pig/conf.dist/pig-env.sh',
                        ]
-each($files_to_update_set) |$name| {
+define set_fix {
   file_line { "$name":
     line   => 'JAVA_HOME=${JAVA_HOME:-/usr/jdk64/jdk1.6.0_31}',
     match  => 'JAVA_HOME=.*/jdk1\.6\.0.*',
     ensure => "present",
   }
 }
+set_fix { "$files_to_update_set": }
 
 #include "storm-install"
 #include "kettle-storm-install"
