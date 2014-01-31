@@ -18,5 +18,15 @@ class { "java":
   version      => "latest",
 }
 
+# Clean up broken env vars Horton puts in /etc/bashrc
+file_line { "/etc/bashrc":
+  line   => "export JAVA_HOME=/usr/jdk64/jdk1.6.0_31",
+  ensure => "absent",
+}
+file_line { "/etc/bashrc":
+  line   => 'export PATH="${JAVA_HOME}bin:$PATH"',
+  ensure => "absent",
+}
+
 #include "storm-install"
 #include "kettle-storm-install"
