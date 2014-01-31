@@ -44,9 +44,8 @@ class storm_install {
   }
   ->
   file { '/etc/storm':
-    ensure => 'directory',
-    owner  => 'storm',
-    group  => 'storm',
+    ensure => 'symlink',
+    target => '/usr/share/storm-0.9.0.1/conf',
   }
   ->
   file { "storm_path":
@@ -54,11 +53,6 @@ class storm_install {
     content => "export PATH=$PATH:/usr/share/storm/bin\n",
     owner   => root,
     group   => root,
-  }
-  ->
-  file { '/etc/storm/dist':
-    ensure => 'symlink',
-    target => '/usr/share/storm/conf',
   }
   ->
   file { '/etc/storm/storm.yaml':

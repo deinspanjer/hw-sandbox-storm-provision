@@ -2,7 +2,6 @@ drpc.servers:
   - "localhost"
 
 storm.local.dir: "/home/storm"
-storm.cluster.mode: "local"
 
 ui.port: 8880
 logviewer.port: 8881
