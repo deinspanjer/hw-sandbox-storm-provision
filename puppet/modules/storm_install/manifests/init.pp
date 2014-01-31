@@ -72,4 +72,25 @@ class storm_install {
     pattern     => '\${storm\.home}/logs',
     replacement => '/var/log/storm'
   }
+
+
+  file { '/etc/supervisord.conf.dist':
+    ensure   => 'file',
+    replace  => false,
+    source   => '/etc/supervisord.conf',
+    requires => Package['supervisor'],
+  }
+  ->
+  concat { '/etc/supervisord.conf':
+    ensure => 'present',
+  }
+  concat::fragment { 'supervisord_dist':
+    target => '/etc/supervisord.conf',
+    source => '/etc/supervisord.conf.dist',
+  }
+  concat::fragment { 'supervisord_storm':
+    target => '/etc/supervisord.conf',
+    source => 'puppet:///modules/storm_install/supervisord.conf',
+  }
+  
 }
