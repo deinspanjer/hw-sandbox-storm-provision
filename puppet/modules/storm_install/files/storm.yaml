@@ -4,8 +4,8 @@ nimbus.host: "localhost"
 drpc.servers:
   - "localhost"
 storm.local.dir: "/home/storm"
-logviewer.port: 80081
-ui.port: 80080
+logviewer.port: 8881
+ui.port: 8880
 storm.messaging.transport: "backtype.storm.messaging.netty.Context"
 storm.messaging.netty.buffer_size: 16384
 storm.messaging.netty.max_retries: 10
