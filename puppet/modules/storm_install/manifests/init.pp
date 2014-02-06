@@ -50,7 +50,7 @@ class storm_install {
   ->
   file { "storm_path":
     path    => "/etc/profile.d/storm-path.sh",
-    content => "export PATH=$PATH:/usr/share/storm/bin\n",
+    content => "export PATH=\$PATH:/usr/share/storm/bin\n",
     owner   => root,
     group   => root,
   }
