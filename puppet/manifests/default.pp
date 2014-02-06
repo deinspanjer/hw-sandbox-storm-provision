@@ -59,5 +59,4 @@ $java_home_fix_files_to_update = {
 create_resources('replace', $java_home_fix_files_to_update, $java_home_fix_line_match_defaults)
 
 include "storm_install"
-->
 include "kettle_storm_install"
