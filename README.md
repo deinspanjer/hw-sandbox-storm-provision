@@ -17,10 +17,14 @@ The Sandbox VM should be running and configured with internet access.
 1. Log into the VM via SSH (i.e. putty on Windows) as instructed on the VM's splash screen.
 1. Run these commands:
   # git clone git@github.com:deinspanjer/hw-sandbox-storm-provision.git
-	```# cd hw-sandbox-storm-provision
-	# ./provision.sh```
+```
+# cd hw-sandbox-storm-provision
+# ./provision.sh
+```
 1. When the provisioning is done, you should be able to tail the storm logs:
-	```# tail -F /var/log/storm/*```
+```
+# tail -F /var/log/storm/*
+```
 1. The last step is to set up port forwarding for the two new HTTP ports.
     1. Open the VirtualBox application
 		1. Select the Hortonworks Sandbox 2.0 VM from the list on the left
@@ -58,10 +62,16 @@ The Sandbox VM should be running and configured with internet access.
             1. Access token secret == "oath.accessTokenSecret"
     1. Add the modified twitter4j.properties file to the jar so it can be found in the classpath
         1. In the hw-sandbox-storm-provision directory of your VM, run this command:
-            ```jar uf kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar twitter4j.properties```
+```
+jar uf kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar twitter4j.properties
+```
     1. Submit the jar to the Storm cluster, passing in the Kettle transformation to run
-        ```storm jar kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar org.pentaho.kettle.engines.storm.KettleStorm demo-twitter4j.ktr```
+```
+storm jar kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar org.pentaho.kettle.engines.storm.KettleStorm demo-twitter4j.ktr
+```
     1. By default, the transformation will run for 15 seconds then automatically shut down.
     1. View the results in the output text file
-        ```cat /home/storm/tweets.txt```
+```
+cat /home/storm/tweets.txt
+```
 1. Optionally, modify the duration or change the filter keywords by editing the demo-twitter4j.ktr
