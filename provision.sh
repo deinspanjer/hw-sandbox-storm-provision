@@ -6,7 +6,7 @@ then
     yum makecache
     sed -i 's/enabled=1/&\npriority=1/' /etc/yum.repos.d/puppetlabs.repo
     yum update -y puppet
-    puppet module install puppetlabs/java
+    puppet module install puppetlabs-java
     git clone git://github.com/puppetlabs/puppetlabs-concat /etc/puppet/modules/concat
     touch /etc/puppet/hiera.yaml
 fi
