@@ -16,10 +16,13 @@ The Sandbox VM should be running and configured with internet access.
 
 1. Log into the VM via SSH (i.e. putty on Windows) as instructed on the VM's splash screen.
 1. Run these commands:
-  # git clone git@github.com:deinspanjer/hw-sandbox-storm-provision.git
-```# cd hw-sandbox-storm-provision
 
-# ./provision.sh```
+    ```
+    # git clone git@github.com:deinspanjer/hw-sandbox-storm-provision.git
+    # cd hw-sandbox-storm-provision
+    # ./provision.sh
+    ```
+
 1. When the provisioning is done, you should be able to tail the storm logs:
 ```# tail -F /var/log/storm/*```
 1. The last step is to set up port forwarding for the two new HTTP ports.
