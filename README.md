@@ -22,7 +22,9 @@ The Sandbox VM should be running and configured with internet access.
 # ./provision.sh
 ```
 1. When the provisioning is done, you should be able to tail the storm logs:
-```# tail -F /var/log/storm/*```
+```
+# tail -F /var/log/storm/*
+```
 1. The last step is to set up port forwarding for the two new HTTP ports.
     1. Open the VirtualBox application
 		1. Select the Hortonworks Sandbox 2.0 VM from the list on the left
