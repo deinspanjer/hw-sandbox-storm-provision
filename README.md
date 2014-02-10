@@ -18,6 +18,7 @@ The Sandbox VM should be running and configured with internet access.
 1. Run these commands:
   # git clone git@github.com:deinspanjer/hw-sandbox-storm-provision.git
 ```# cd hw-sandbox-storm-provision
+
 # ./provision.sh```
 1. When the provisioning is done, you should be able to tail the storm logs:
 ```# tail -F /var/log/storm/*```
