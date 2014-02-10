@@ -37,4 +37,31 @@ The Sandbox VM should be running and configured with internet access.
     $ TODO
 
 ## To try out the Kettle-Storm sample transformation:
-    $ TODO
+
+1. Since this transformation uses twitter4j, you must set up credentials for the demo.
+    1. Create app and access token
+        1. Log in to the Twitter Dev site:  https://apps.twitter.com/
+        1. Click the "Create New App button"
+        1. Fill out the "Application details" form.
+            1. The contents of this form are not important for the demo.
+            1. You can leave the "Callback URL" field blank.
+        1. Click the "Create your Twitter application" button.
+        1. On the "Application Mangement" page for your newly created app, click the "manage API keys" link under "Application settings" / "API key"
+        1. On the "API Keys" page, click the "Create my access token" button at the bottom.
+        1. Wait a few moments, then refresh the page to see your access token.
+    1. Edit twitter4j.properties file
+        1. In the hw-sandbox-storm-provision directory of your VM, edit the twitter4j.properties file
+        1. Copy each of the four values from the Twitter App API Keys page into this file:
+            1. API key == "oath.consumerKey"
+            1. API secret == "oath.consumerSecret"
+            1. Access token == "oath.accessToken"
+            1. Access token secret == "oath.accessTokenSecret"
+    1. Add the modified twitter4j.properties file to the jar so it can be found in the classpath
+        1. In the hw-sandbox-storm-provision directory of your VM, run this command:
+            jar uf kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar twitter4j.properties
+    1. Submit the jar to the Storm cluster, passing in the Kettle transformation to run
+        storm jar kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar org.pentaho.kettle.engines.storm.KettleStorm demo-twitter4j.ktr
+    1. By default, the transformation will run for 15 seconds then automatically shut down.
+    1. View the results in the output text file
+        cat /home/storm/tweets.txt
+1. Optionally, modify the duration or change the filter keywords by editing the demo-twitter4j.ktr
