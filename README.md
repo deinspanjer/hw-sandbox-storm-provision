@@ -62,13 +62,12 @@ The Sandbox VM should be running and configured with internet access.
             1. Access token secret == "oath.accessTokenSecret"
     1. Add the modified twitter4j.properties file to the jar so it can be found in the classpath
         1. In the hw-sandbox-storm-provision directory of your VM, run this command:
-
-    jar uf kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar twitter4j.properties
+    ```jar uf kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar twitter4j.properties```
     1. Submit the jar to the Storm cluster, passing in the Kettle transformation to run
 
     storm jar kettle-engine-storm-0.0.2-SNAPSHOT-for-remote-topology.jar org.pentaho.kettle.engines.storm.KettleStorm demo-twitter4j.ktr
+
     1. By default, the transformation will run for 15 seconds then automatically shut down.
     1. View the results in the output text file
-
     cat /home/storm/tweets.txt
 1. Optionally, modify the duration or change the filter keywords by editing the demo-twitter4j.ktr
