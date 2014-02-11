@@ -29,6 +29,9 @@ fi
 # Do the fun stuff.  Install and configure Storm as well as clean up a few issues with the VM
 puppet apply --modulepath="$PUPPET_MODULE_PATH" puppet/manifests/default.pp $@
 
-# There is no quick fix to get storm into the path for the current ssh session
-echo "To get storm into your path, please either log in again, or run the following command in this window:"
-echo ". /etc/profile.d/storm-path.sh"
+# If the user is in an interactive shell, inform them they need to re-log or source.
+if [[ $_ == $0 ]]
+then
+    echo "To get storm into your path, please either log in again, or run the following command in this window:"
+    echo ". /etc/profile.d/storm-path.sh"
+fi
