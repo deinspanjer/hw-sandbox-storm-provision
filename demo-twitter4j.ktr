@@ -15,6 +15,11 @@
             <description>Comma separated list of keywords for which to search</description>
         </parameter>
         <parameter>
+            <name>OUTPUT_DIR</name>
+            <default_value>&#x2f;home&#x2f;storm</default_value>
+            <description/>
+        </parameter>
+        <parameter>
             <name>TIMEOUT</name>
             <default_value>15</default_value>
             <description>Seconds until stream is stopped</description>
@@ -287,8 +292,8 @@ public void dispose(StepMetaInterface smi, StepDataInterface sdi)
     </fields><clear_result_fields>N</clear_result_fields>
 <info_steps></info_steps><target_steps></target_steps><usage_parameters></usage_parameters>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>121</xloc>
-      <yloc>107</yloc>
+      <xloc>100</xloc>
+      <yloc>100</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -318,10 +323,10 @@ public void dispose(StepMetaInterface smi, StepDataInterface sdi)
     <fileNameField/>
     <create_parent_folder>N</create_parent_folder>
     <file>
-      <name>&#x2f;home&#x2f;storm&#x2f;tweets</name>
+      <name>&#x24;&#x7b;OUTPUT_DIR&#x7d;&#x2f;tweets</name>
       <is_command>N</is_command>
       <servlet_output>N</servlet_output>
-      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <do_not_open_new_file_init>Y</do_not_open_new_file_init>
       <extention>txt</extention>
       <append>N</append>
       <split>N</split>
@@ -411,8 +416,8 @@ public void dispose(StepMetaInterface smi, StepDataInterface sdi)
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>269</xloc>
-      <yloc>114</yloc>
+      <xloc>250</xloc>
+      <yloc>100</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
